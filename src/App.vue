@@ -1,12 +1,11 @@
 <template>
   <div id="nav">
-    <LayoutBox></LayoutBox>
-  </div>
   <router-view/>
+  </div>
 </template>
 <script>
 import LayoutBox from './components/LayoutBox.vue'
-
+import { defineComponent } from 'vue'
 export default defineComponent({
   components: {
     LayoutBox
@@ -17,12 +16,13 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 #app {
   
 }
 
 #nav {
-  
+  width: 100vw;
+  height: 100vh;
 }
 </style>

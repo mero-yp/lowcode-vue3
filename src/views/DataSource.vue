@@ -1,6 +1,6 @@
 <template>
     <div>
-        this is page
+        this is dataSource
     </div>
 </template>
 
