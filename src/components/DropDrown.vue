@@ -1,7 +1,7 @@
 <template>
-    <div>
-        this is result
-    </div>
+    <a-dropdown>
+        
+    </a-dropdown>
 </template>
 
 <script lang="ts">
@@ -16,6 +16,6 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 
 </style>

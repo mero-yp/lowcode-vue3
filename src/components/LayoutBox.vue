@@ -1,55 +1,49 @@
 <template>
   <div class="layout-box">
-      <div class="layout-header">
-          <div class="top-nav-box">
-    <div class="nav-left-box">
-        <div class="demo-dropdown-wrap">
-        <a-dropdown >
-      <div class="nav-menu">
-          <BarsOutlined />
-          <P>菜单</P>
-      </div>
-      <template #overlay>
-      <a-menu>
-        <a-menu-item key="1">
-          <a href="javascript:;">文件</a>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <a href="javascript:;">工具</a>
-        </a-menu-item>
-      </a-menu>
-    </template>
-        </a-dropdown>
+    <div class="layout-header">
+      <div class="top-nav-box">
+        <div class="nav-left-box">
+          <div class="demo-dropdown-wrap">
+            <a-cascader
+              v-model:value="selectValue"
+              :options="cascaderOptions"
+              @change="onMenuChange"
+            >
+              <div class="nav-menu" href="#">
+                <BarsOutlined />
+                <div>菜单</div>
+              </div>
+            </a-cascader>
+          </div>
+          <router-link to="/dataSource">
+            <div class="nav-data">
+              <DatabaseOutlined />
+              <p>数据源</p>
+            </div>
+          </router-link>
         </div>
-        <router-link to="/dataSource">
-      <div class="nav-data">
-        <DatabaseOutlined />
-        <p>数据源</p>
-      </div>
-      </router-link>
-    </div>
-    <div class="nav-title">test后台管理</div>
-    <div class="nav-right-box">
-      <div class="nav-preview" title="预览">
-        <BulbOutlined />
-      </div>
-      <div class="nav-publish" title="发布">
-        <SendOutlined />
-      </div>
-      <div class="nav-user" title="我的">
-        <UserOutlined />
+        <div class="nav-title">test后台管理</div>
+        <div class="nav-right-box">
+          <div class="nav-preview" title="预览">
+            <BulbOutlined />
+          </div>
+          <div class="nav-publish" title="发布">
+            <SendOutlined />
+          </div>
+          <div class="nav-user" title="我的">
+            <UserOutlined />
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-      </div>
-      <div class="layout-content">
+    <div class="layout-content">
       <router-view></router-view>
-      </div>    
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 
 import {
   BarsOutlined,
@@ -58,32 +52,70 @@ import {
   BulbOutlined,
   SendOutlined,
 } from "@ant-design/icons-vue";
+interface MenuOption {
+  value: string;
+  label: string;
+  children?: MenuOption[];
+  code?: number;
+  [key: string]: any;
+}
 export default defineComponent({
   components: {
     BarsOutlined,
-  DatabaseOutlined,
-  UserOutlined,
-  BulbOutlined,
-  SendOutlined,
+    DatabaseOutlined,
+    UserOutlined,
+    BulbOutlined,
+    SendOutlined,
   },
   setup() {
-    return {};
+    const selectValue = ref<string[]>([]);
+    const cascaderOptions: MenuOption[] = reactive([
+      {
+        value: "文件",
+        label: "文件",
+        children: [
+          {
+            value: "预览",
+            label: "预览",
+          },
+          {
+            value: "发布",
+            label: "发布",
+          },
+        ],
+      },
+      {
+        value: "工具",
+        label: "工具",
+        children: [
+          {
+            value: "清空",
+            label: "清空",
+          },
+        ],
+      },
+    ]);
+    const onMenuChange = (value: string, selectedOptions: MenuOption[]) => {};
+    return {
+      selectValue,
+      cascaderOptions,
+      onMenuChange,
+    };
   },
 });
 </script>
 
 <style lang="less" scoped>
-.layout-box{
+.layout-box {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.layout-header{
+.layout-header {
   height: 40px;
   width: 100%;
   background-color: rgb(38, 47, 62);
-
 }
 .top-nav-box {
   width: 100%;
@@ -144,9 +176,8 @@ export default defineComponent({
   color: #fff;
 }
 
-.layout-content{
+.layout-content {
   width: 100%;
   flex-grow: 1;
 }
-
 </style>
